@@ -1,19 +1,9 @@
 const router = require('koa-router')()
+const debug = require('@/utils').debug('routes');
 
-router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
-})
+router.use(require('./root').routes())
+router.use(require('./school').routes())
 
-router.get('/string', async (ctx, next) => {
-  ctx.body = 'koa2 string'
-})
-
-router.get('/json', async (ctx, next) => {
-  ctx.body = {
-    title: 'koa2 json'
-  }
-})
+debug(router.stack.map(item => item.path))
 
 module.exports = router

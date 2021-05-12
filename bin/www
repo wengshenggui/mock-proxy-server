@@ -4,8 +4,14 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('demo:server');
+/**
+ // Register alias
+ */
+
+require('module-alias').addAlias('@', process.cwd())
+
+var debug = require('@/utils').debug('server');
+var app = require('@/app');
 var http = require('http');
 
 /**
@@ -87,4 +93,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('startup on', bind)
 }

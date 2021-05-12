@@ -3,17 +3,21 @@ const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
+const bodyParser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
-const index = require('./routes/index')
-const users = require('./routes/users')
+const debug = require('@/utils').debug('app');
+const config = require('@/config')
+debug('config:', config)
+const proxy = require('@/proxy')
+const router = require('@/routes')
+
 
 // error handler
 onerror(app)
 
-// middlewares
-app.use(bodyparser({
+// middleware
+app.use(bodyParser({
   enableTypes:['json', 'form', 'text']
 }))
 app.use(json())
@@ -24,17 +28,11 @@ app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
 
-// logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
-
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(router.routes())
+
+// proxy
+app.use(proxy(config.proxy))
 
 // error-handling
 app.on('error', (err, ctx) => {
