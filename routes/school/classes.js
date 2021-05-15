@@ -8,7 +8,7 @@ router.get('list', function (ctx, next) {
   ctx.body = classes
 })
 
-router.get('add', function (ctx, next) {
+router.post('add', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
 
@@ -17,7 +17,7 @@ router.get('detail-:id', function (ctx, next) {
   ctx.body = getDetailById(classes, id)
 })
 
-router.get('update/:id', function (ctx, next) {
+router.post('update/:id', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
 

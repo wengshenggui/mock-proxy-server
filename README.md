@@ -15,6 +15,7 @@
   $ yarn run debug
 ```
 
+```
 .
 ├─bin ------ 启动脚本
 ├─config --- 配置项
@@ -24,3 +25,5 @@
 ├─routes --- 路由
 ├─utils ---- 工具
 └─views ---- 页面
+```
+
